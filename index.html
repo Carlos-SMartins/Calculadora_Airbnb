@@ -4,23 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Airbnb</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <section>
+    <section class="container">
         <h2><span id="preco_diaria">R$ 620</span> noite</h2>
         <form action="#">
             <div>
                 <p>
                     <label for="checkin">Check-in</label>
-                    <input type="date" id="checkin">
+                    <input type="date" id="checkin" class="recarregar">
                 </p>
                 <p>
                     <label for="checkout">Check-Out</label>
-                    <input type="date" id="checkout">
+                    <input type="date" id="checkout" class="recarregar">
                 </p>
                 <p>
-                    <label for="Hospedes">Hospedes</label>
-                    <select name="Hospedes" id="Hospedes"></select>
+                    <label for="Hospedes">Hóspedes</label>
+                    <select name="Hospedes" id="Hospedes" class="recarregar">
+                        <option value="1">1 </option>
+                        <option value="2">2 </option>
+                        <option value="3">3 </option>
+                        <option value="4">4 </option>
+                        <option value="5">5 </option>
+                        <option value="6">6 </option>
+                        <option value="7">7 </option>
+                        <option value="8">8 </option>
+                        <option value="9">9 </option>
+                        <option value="10">10 </option>
+                    </select>
                 </p>
             </div>
         </form>
@@ -44,37 +57,43 @@
         </div>            
     </section>
     <script>
-        let checkout =  document.getElementById("checkout")
+        let checkout =  document.getElementById("checkout");
+        let hospedes = document.getElementById("Hospedes");
         console.log(checkout)
-        
-        checkout.addEventListener("change", function(){
-        let data_saida = new Date(this.value);
-        let data_entrada = new Date(document.getElementById("checkin").value);
-        console.log(data_saida, data_entrada);
-        let diarias = (data_saida - data_entrada) /86400000;
-        console.log(diarias);
+            document.addEventListener("change", function(){
+            if (event.target.classList.contains("recarregar")) {
+            let data_saida = new Date(checkout.value);
+            let data_entrada = new Date(document.getElementById("checkin").value);
+            console.log(data_saida, data_entrada);
+            let diarias = (data_saida - data_entrada) /86400000;
+            console.log(diarias);
 
-        let preco_diaria = parseFloat(document.getElementById("preco_diaria").innerText.substring(2));
+            let preco_diaria = parseFloat(document.getElementById("preco_diaria").innerText.substring(2));
 
-        let subtotal = document.getElementById("subtotal"); 
-        subtotal.innerText = "R$" + preco_diaria + "x" + diarias + " noites ";
-        let valor_sub = document.getElementById("valor_sub")
-        valor_sub.innerText = "R$"+(diarias * 620);
-        let valor_diaria = 620 * diarias;
-        valor_sub.innerHTML = "R$" + valor_diaria;
+            let subtotal = document.getElementById("subtotal"); 
+            subtotal.innerText = "R$" + preco_diaria + "x" + diarias + " noites ";
+            let valor_sub = document.getElementById("valor_sub")
+            valor_sub.innerText = "R$"+(diarias * 620);
+            let valor_diaria = 620 * diarias;
+            valor_sub.innerHTML = "R$" + valor_diaria;
 
-        let taxa_servico = document.getElementById('taxa_servico');
-        let valor_taxa_servico = 0.15 * valor_diaria;
-        taxa_servico.innerHTML = "R$" + valor_taxa_servico;
+            let taxa_servico = document.getElementById('taxa_servico');
+            let valor_taxa_servico = 0.15 * valor_diaria;
+            taxa_servico.innerHTML = "R$" + valor_taxa_servico;
 
-        let taxa_limpeza = document.getElementById('taxa_limpeza');
-        let valor_taxa_limpeza = parseFloat(taxa_limpeza.innerText.substring(2));
-        console.log(valor_taxa_limpeza)
-        
-        let total = document.getElementById('total');
-        total.innerHTML = 'R$' + (valor_diaria + valor_taxa_servico + valor_taxa_limpeza)
+            let taxa_limpeza = document.getElementById('taxa_limpeza');
+            let valor_taxa_limpeza = parseFloat(taxa_limpeza.innerText.substring(2));
+            console.log(valor_taxa_limpeza)
+            
+            let numero_hospedes = parseInt(document.getElementById('Hospedes').value);
 
-        });
+            let total = document.getElementById('total');
+            total.innerHTML = 'R$' + ((numero_hospedes) * (valor_diaria + valor_taxa_servico + valor_taxa_limpeza)).toFixed(2);
+            console.log(total.innerHTML);
+            console.log(numero_hospedes);
+            }
+            
+            });
     </script>
 </body>
 </html>
